@@ -1,7 +1,6 @@
 let total = 0;
 let buffer = '0';
 let operador;
-let virgula = 0;
 
 const tela = document.querySelector('.tela');
 
@@ -29,7 +28,7 @@ function manipulaSimbolo(simbolo){
             }
             calcula(simbolo);
             operador = null;
-            buffer = total;
+            buffer = formatarNumero(total, quantidadeAposAVirgula(total));
             total = 0;
             break;
         
@@ -38,22 +37,15 @@ function manipulaSimbolo(simbolo){
                 buffer = '0';
             }
             else{
-                if (buffer[buffer.length-1] === ",") {
-                    virgula = 0;
-                }
                 buffer = buffer.substring(0, buffer.length - 1);
+                aux = converteParaNumero(buffer, 0);
+                buffer = converteParaString(aux);
             }
             break;
         
         case ',':
-            if (virgula == 0) {
-                if (buffer === "0") {
-                    return;
-                }
-                else{
-                    buffer += ',';
-                    virgula = 1;
-                }  
+            if (!buffer.includes(',')) {
+                buffer += ',';
             }
             break;
         
@@ -71,16 +63,7 @@ function calcula(simbolo){
         return;
     }
 
-    var numero;
-    
-    if (virgula === 1) {
-        buffer = buffer.replace(",", ".");
-        numero = parseFloat(buffer); 
-        virgula = 0;
-    }
-    else{
-        numero = parseInt(buffer); 
-    }
+    var numero = converteParaNumero(buffer);
 
     if (total === 0) {
         total = numero;
@@ -96,19 +79,15 @@ function operacao(numero){
     switch(operador){
         case '+':
             total += numero;
-            total = formatarNumero(total, quantidadeAposAVirgula(total));
             break;
         case '-':
             total -= numero;
-            total = formatarNumero(total, quantidadeAposAVirgula(total));
             break;
         case 'x':
             total *= numero;
-            total = formatarNumero(total, quantidadeAposAVirgula(total));
             break;
         case '÷':
             total /= numero;
-            total = formatarNumero(total, quantidadeAposAVirgula(total));
             break;
     }
 }
@@ -119,7 +98,29 @@ function manipulaNumero(numero){
     }
     else{
         buffer += numero;
+        
+        var aux = converteParaNumero(buffer);
+        
+        buffer = converteParaString(aux);
     }
+}
+
+function converteParaString(numero){
+    return formatarNumero(numero, quantidadeAposAVirgula(numero));
+}
+
+function converteParaNumero(string, flag){
+    var numero;
+    string = string.replace(/[.]/gi, "");
+    
+    if (string.includes(',')) {
+        string = string.replace(",", ".");
+        numero = parseFloat(string); 
+    }
+    else{
+        numero = parseInt(string);
+    }
+    return numero;
 }
 
 function quantidadeAposAVirgula(numero){
