@@ -2,6 +2,7 @@ let total = 0;
 let buffer = '0';
 let operador;
 
+//obj da tela
 const tela = document.querySelector('.tela');
 
 function botaoClick(valor){
