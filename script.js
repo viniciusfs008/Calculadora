@@ -19,7 +19,6 @@ function manipulaSimbolo(simbolo){
 
         case 'C':
             buffer ='0';
-            virgula = 0;
             break;
 
         case '=':
@@ -59,10 +58,6 @@ function manipulaSimbolo(simbolo){
 }
 
 function calcula(simbolo){
-    if (buffer === '0') {
-        return;
-    }
-
     var numero = converteParaNumero(buffer);
 
     if (total === 0) {
