@@ -1,0 +1,86 @@
+html{
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*, *::before{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    align-items: center;
+    background: linear-gradient(320deg, #eb92be, #ffef78, #63c9b4);
+    display: flex;
+    font-family: 'Dosis', sans-serif;
+    font-display: swap;
+    height: inherit;
+    justify-content: center;
+}
+
+.calculadora{
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.2);
+    width: 300px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.tela{
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: end;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.row{
+    display: flex;
+    justify-content:space-between;
+}
+
+.botao{
+    width: 25%;
+    margin-top: 10px;
+    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.botao:last-child{
+    margin-right: 0;
+    background: rgba(140, 241, 241, 0.6);
+}
+
+.botao:hover{
+    background: rgba(255, 255, 255, 1);
+}
+
+.botao:last-child:hover{
+    background: rgba(140, 241, 241, 1);
+}
+
+.del{
+    background: rgba(235, 191, 46, 0.6);
+}
+
+.del:hover{
+    background: rgba(235, 191, 46, 1);
+}
+
+.double{
+    width: 55%;
+}
