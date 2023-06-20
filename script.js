@@ -1,9 +1,10 @@
-let total = 0;
+let total = null;
 let buffer = '0';
 let operador;
+let conta = '0';
 
-//obj da tela
-const tela = document.querySelector('.tela');
+const tela = document.querySelector('.conta');
+const historico = document.querySelector('.historico');
 
 function botaoClick(valor){
     if(isNaN(valor)){
@@ -12,7 +13,13 @@ function botaoClick(valor){
     else{
         manipulaNumero(valor);
     }
+
+    historico.innerText = conta;
     tela.innerText = buffer;
+
+    if (valor === '=') {
+        conta = '0';
+    }
 }
 
 function manipulaSimbolo(simbolo){
@@ -20,16 +27,22 @@ function manipulaSimbolo(simbolo){
 
         case 'C':
             buffer ='0';
+            conta = '0';
             break;
 
         case '=':
             if(operador === null){
                 return;
             }
+            var num = buffer;
             calcula(simbolo);
             operador = null;
             buffer = formatarNumero(total, quantidadeAposAVirgula(total));
-            total = 0;
+            total = null;
+            conta = conta + " " + num + " " + simbolo + " " + buffer;
+            if (conta == "0 ÷ 0 = 0") {
+                conta = "0 ÷ 0 é indefinido!"
+            }
             break;
         
         case '←':
@@ -53,15 +66,21 @@ function manipulaSimbolo(simbolo){
         case '-':
         case '÷':
         case 'x':
-           calcula(simbolo);
-           break; 
+            if (conta === '0') {
+                conta = buffer +  " " + simbolo;
+            }
+            else{
+                conta = conta + " " + buffer +  " " + simbolo;
+            }
+            calcula(simbolo);
+            break; 
     }
 }
 
 function calcula(simbolo){
     var numero = converteParaNumero(buffer);
 
-    if (total === 0) {
+    if (total === null) {
         total = numero;
     }
     else{
@@ -83,18 +102,23 @@ function operacao(numero){
             total *= numero;
             break;
         case '÷':
-            total /= numero;
+            if (total === 0 && numero === 0) {
+                total = 0;
+            }
+            else{
+                total /= numero;
+            }
             break;
     }
 }
 
 function manipulaNumero(numero){
-    if (buffer === "0") {
+    if (buffer === '0') {
         buffer = numero;
     }
     else{
         buffer += numero;
-        
+       
         var aux = converteParaNumero(buffer);
         
         buffer = converteParaString(aux);
